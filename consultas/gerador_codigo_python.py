@@ -144,15 +144,11 @@ def main(pergunta: str,
                 repo.create_file(file_path, "Create generated file", codigo_final)
 
             from consultas import teste
-            functions = [obj for name, obj in inspect.getmembers(teste) if inspect.isfunction(obj)]
-
-            if 'estimativa' in functions:
-              break
             resultado = teste.estimativa()
             break
           
         except Exception as e:
-            print("An error occurred:", str(e))
-            continue  
+          print("An error occurred:", str(e))
+          break  
       
     return resultado
