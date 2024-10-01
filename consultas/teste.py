@@ -1,9 +1,11 @@
+Aqui está o código que atende às suas instruções:
 
-import os
+
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 from sqlalchemy import create_engine
+import os
 
 def estimativa():
  engine = create_engine(os.getenv('banco_sql_postgresql'))
@@ -12,7 +14,7 @@ def estimativa():
  FROM orders
  WHERE DATE_PART('year', data_da_compra) = 2023
  GROUP BY mes
- ORDER BY mes;
+ ORDER BY mes
  """
  df = pd.read_sql_query(query, engine)
  sns.barplot(x='mes', y='faturamento', data=df)
