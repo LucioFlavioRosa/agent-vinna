@@ -1,0 +1,5 @@
+dados:
+  "customers": contem todas as informações dos clientes
+  "orders": tabela que salva os dados detalhados da compra, cada linha corresponde a um ítem da compra, se uma compra tiver 2 dois itens distintos a compra tera 2 linhas
+  "products": contem informacoes detalhadas sobre produtos disponiveis
+  "reviews": contem as informacoes dos feedbacks dados pelos clientes

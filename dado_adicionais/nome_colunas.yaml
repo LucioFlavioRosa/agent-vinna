@@ -1,0 +1,5 @@
+dados:
+  "customers": "id_consumidor, nome_consumidor, data_nascimento, sexo, profissao, email, telefone, endereco, cep, estado, data_de_atualizacao_do_cadastro, categoria_do_consumidor"
+  "orders": "id_compra, id_consumidor, id_produto, preco_unitario, quantidade_do_produto_vendida, valor_frete, forma_de_pagamento, data_da_compra"
+  "products": "id_produto, custo_fixo_do_produto, custo_variavel_do_produto, nome_do_produto, grupo_do_produto, subgrupo_do_produto, data_de_atualizacao_do_cadastro"
+  "reviews": "id_review, id_compra, id_produto, nota_produto, comentario_sobre_a_compra, data_de_atualizacao"

@@ -1,0 +1,115 @@
+query_1:
+  objetivo: gerar a clusterizaçao ou agrupamento dos clientes e salvar os dados
+  instrucoes:
+    1- NAO DEVE ter texto, NAO DEVE ter comentario, DEVE TER somente codigo python.
+    2- o resultado final do codigo deve ser dado por uma funcao chamada estimativa.
+    3- a funcao estimativa nao tem nenhuma variavel de entrada e nao tem retorno
+    4- a conexao com o banco de dados postgresql://luciorosa:postgres@localhost:5432/postgres
+    5- ler as tabelas fornecidas usando pandas read_sql_query, sqlalchemy.
+    6- calcular as FEATURES, seguindo as intrucoes.
+        6a1- cada calculo tem que resultar em um tabela com duas clunas, uma coluna é o id_consumidor e outra da feature
+        6a- tempo de relacionamento do cliente, data de hoje menos a data de cadastramento do cliente
+        6b- quantidade de compras
+        6c- quantidade media de itens por compra, deve usar semente a quantidade de produtos vendida
+        6d- quantidade de produtos unicos comprados
+        6e- valor media das compras, valor da compra TEM que ser valor_unitario*quantidade_vendida+valor_frete.
+        6e- intervalo medio em dias entre compras consecutivas, (data ultima compra menos data da primeira conta) em dias divido pela quantidade de compras.
+        6f- fracao media de cada grupo de produto presente nas compras, tem que seguir a formula orders_final.groupby('id_consumidor').grupo_do_produto.value_counts(normalize=True).reset_index(
+    ).pivot(values='proportion', columns='grupo_do_produto', index='id_consumidor').fillna(0).reset_index().
+        6g- a tabela de cada feature deve conter SOMENTE o id_consumidor e a feature calculada
+    7- juntar TODAS as features calculadas acima SEMPRE usar how='inner'
+      7a- NAO pode ter coluna de data nessa tabela
+      7b- NAO usar reset_index no momento de juntar as tabelas
+      7c- NAO deixar de juntar a feature tempo de relacionamento
+      7d- no momento de juntar as features calculadas TEM QUE USAR .set_index('id_consumidor') na tabela da direita
+    8- normalizar os dados
+    9- fazer a clusterizacao usando somente as feaures criadas
+    10- a clusterizacao deve ser feita usando from sklearn.cluster import KMeans e a quantidade de clusters deve ser 3
+    11- preencher NaN values com 0
+    12 - e salvar em um arquivo csv na pasta resultado_clusterizacao
+    6a1- cada calculo tem que resultar em um tabela com duas colunas, uma coluna TEM que ser o id_consumidor e outra da feature. usar .reset_index() ao final de cada calculo de cada feature
+
+query_2:
+  objetivo: gerar a features para clusterizaçao ou agrupamento dos clientes e salvar os dados
+  instrucoes:
+    1- NAO DEVE ter texto, NAO DEVE ter comentario, DEVE TER somente codigo python.
+    2- o resultado final do codigo deve ser dado por uma funcao chamada estimativa.
+    3- a funcao estimativa nao tem nenhuma variavel de entrada e nao tem retorno
+    4- a conexao com o banco de dados postgresql://luciorosa:postgres@localhost:5432/postgres
+    5- ler as tabelas fornecidas usando pandas read_sql_query, sqlalchemy
+        5.a- ler as tabelas products, orders e customers.
+        5.b- TEM que juntar as tabelas orders e products
+        5.c- NUNCA usar .reset_index(name=)
+    6- calcular as FEATURES, seguindo as intrucoes.
+        6a- tempo de relacionamento do cliente, data de hoje menos a data de cadastramento do cliente
+        6b- quantidade de compras de cada consumidor
+        6c- quantidade media de itens por compra, tem que agrupar por id_consumidor e id_compra e somar tudo, depois fazer um agrupamento somente por id_consumidor e tirar a media, deve usar semente a quantidade de produtos vendida
+        6d- quantidade de produtos unicos comprados
+        6e- valor media das compras, valor da compra TEM que ser valor_unitario*quantidade_vendida+valor_frete.
+        6e- intervalo medio entre compras, (data ultima compra menos data da primeira conta) em dias divido pela (quantidade de compras).values.
+        6f- fracao media de cada grupo de produto presente nas compras, tem que seguir a formula orders_final.groupby('id_consumidor').grupo_do_produto.value_counts(normalize=True).reset_index().pivot(values='proportion', columns='grupo_do_produto', index='id_consumidor').fillna(0).reset_index(). 
+        6g- a tabela de cada feature deve conter SOMENTE o id_consumidor e a feature calculada
+    7- juntar TODAS as features calculadas acima SEMPRE usar how='inner'
+      7a- NAO pode ter coluna de data nessa tabela
+      7b- NAO usar .reset_index() no momento de juntar as tabelas
+      7c- JUNTAR a feature tempo de relacionamento
+      7c1- Nao usar set_index('id_consumidor') na tabela da esquerda no join
+      7d- A cada join de tabelas usar .set_index('id_consumidor') SOMENTE NA tabela da direita
+      7e- conferir se os nos nomes das tabelas das features realmente estao corretos
+    8- salvar as features em um arquivo csv na pasta resultado_clusterizacao
+      8a- NAO usar index=False para salvar as features
+
+query_3:
+  objetivo: ler os dados de features previamente geradas e fazer a clusterizacao
+  instrucoes:
+    1- NAO DEVE ter texto, NAO DEVE ter comentario, DEVE TER somente codigo python.
+    2- o resultado final do codigo deve ser dado por uma funcao chamada estimativa.
+    3- a funcao estimativa nao tem nenhuma variavel de entrada e nao tem retorno
+    4- E OBRIGATORIO LER o ultimo arquivo .csv NA PASTA resultado_clusterizacao.
+      4.a se existir coluna com 'index' no nome TEM que EXCLUIR a coluna
+      4.b se existir coluna com 'unnamed' no nome TEM que EXCLUIR a coluna
+    5- Se alguma tabela extra for dada
+      5a. conexao com o banco de dados postgresql://luciorosa:postgres@localhost:5432/postgres
+      5b. ler as tabelas necessarias usando pandas read_sql_query, sqlalchemy
+    6. Filtrar os clientes da tabaela .csv
+      6a- Encontrar os clientes neessarios para responder a pergunta fazendo o filtro na tabela fornecida
+      6b- filtrar os clientes na tabela .csv
+      EXEMPLO para clientes de MG o correto e fazer data[data.id_consumidor.isin(customers[customers.estado == 'MG'].id_consumidor)]
+      EXEMPLO para clientes que fizeram compras no ano de 2023 data[data.id_consumidor.isin(orders[(orders.data_compra >= '2023-01-01') & (orders.data_compra < '2024-01-01')].id_consumidor)]
+      EXEMPLO para clientes de SP que fizeram compras no ano de 2023 data[data.id_consumidor.isin(orders[(orders.data_compra >= '2023-01-01') & (orders.data_compra < '2024-01-01') & (customers[customers.estado == 'SP')].id_consumidor)]
+    7- Fazer na tabela final fazer id_consumidor.set_index()
+    8- normalizar os dados usando from sklearn.preprocessing import StandardScaler.
+    9- fazer a clusterizacao usando os dados normalizados e from sklearn.cluster import KMeans
+      9a- a quantidade de cluster será dada pela pergunta
+    10- inserir os clusters labels nos dados originais.
+    11- salvar o resultado final como arquivo .csv na pasta resultado_clusterizacao
+
+
+query_4:
+  objetivo: gerar a features dadas na pergunta para clusterizaçao ou agrupamento dos clientes e salvar os dados
+  instrucoes:
+    1- NAO DEVE ter texto, NAO DEVE ter comentario, DEVE TER somente codigo python.
+    2- Identifique quais features foram pedidas na pegunta.
+    2- o resultado final do codigo deve ser dado por uma funcao chamada estimativa.
+    3- a funcao estimativa nao tem nenhuma variavel de entrada e nao tem retorno
+    4- a conexao com o banco de dados postgresql://luciorosa:postgres@localhost:5432/postgres
+    5- ler as tabelas fornecidas usando pandas read_sql_query, sqlalchemy
+        5.a- ler as tabelas products, orders e customers.
+        5.b- TEM que juntar as tabelas orders e products
+        5.c- E PROIBIDO .reset_index(name=)
+    6- Abaixo estao instrucoes para calcular varias features, selecione SOMENTE as features que foram pedidas na pegunta.
+        6a- tempo de relacionamento do cliente, data de hoje menos a data de cadastramento do cliente
+        6b- quantidade de compras de cada consumidor
+        6c- quantidade media de itens por compra, tem que agrupar por id_consumidor e id_compra e somar tudo, depois fazer um agrupamento somente por id_consumidor e tirar a media, deve usar semente a quantidade de produtos vendida
+        6d- quantidade de produtos unicos comprados
+        6e- valor media das compras, valor da compra TEM que ser valor_unitario*quantidade_vendida+valor_frete.
+        6e- intervalo medio em dias entre compras consecutivas, (data ultima compra menos data da primeira conta) em dias divido pela (quantidade de compras).values.
+        6f- fracao media de cada grupo de produto presente nas compras, tem que seguir a formula orders_final.groupby('id_consumidor').grupo_do_produto.value_counts(normalize=True).reset_index().pivot(values='proportion', columns='grupo_do_produto', index='id_consumidor').fillna(0).reset_index(). 
+        6g- a tabela de cada feature deve conter SOMENTE o id_consumidor e a feature calculada
+    7- juntar TODAS as features calculadas acima SEMPRE usar how='inner'
+      7a- NAO pode ter coluna de data nessa tabela
+      7b- NAO usar .reset_index() no momento de juntar as tabelas
+      7d- A cada join de tabelas usar .set_index('id_consumidor') SOMENTE NA tabela da direita
+      7e- conferir se os nos nomes das tabelas das features realmente estao corretos
+    8- salvar as features em um arquivo csv na pasta resultado_clusterizacao
+      8a- NAO usar index=False para salvar as features

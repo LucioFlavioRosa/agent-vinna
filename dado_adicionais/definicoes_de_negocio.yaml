@@ -1,0 +1,9 @@
+dados:
+  "taxa de variacao": tem que segui a formula  (operation(variable_month_1) - LAG(operation(variable_month_1), 1) OVER (ORDER BY time_window.date_column)) / operation(variable_month_1), operation pode ser SUM, AVG, ou qualquer outra função e time_window pode ser MONTH, DAY, YEAR depende da pergunta.
+  "preco total da venda": deve seguir a formula para cada produto na mesma compra preco_unitario*quantidade + frete, e somar todos os item na mesma compra,
+  "faturamento": é a soma total do preco de venda em um periodo, pode ser por produto, por grupo de produto, entre outras divisoes
+  "lucro": O lucro é calculado seguindo a formula preco total de venda - custo fixo - custo variavel - custo_frete . Essa formula pode ser aplicada somente por produto ou por venda
+  "estado": quando houver pergunta sobre estado, deve-se agrupar a variavel de interesse por todos os clientes que são do estado, a tabela que contem o estado se chama customers
+  "mes": quando houver pergunta que tenha algo relacioado mes DEVE haver pelo menos o agrupamento por mes
+  "crescimento": quando for feita alguma pergunta sobre crescimento, aumento, ou algo similar, DEVE HAVER UMA OPERAÇÃ0 entre dois valores que vão depender da pergunta
+  "crescimento relativo": quando for feita alguma pergunta sobre crescimento relativo, aumento relativo, ou algo similar, DEVE HAVER UMA DIVISÃO entre dois valores que vão depender da pergunta

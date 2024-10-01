@@ -1,0 +1,56 @@
+query_1:
+  objetivo: calcular a estimativa de uma variavel qualquer em um periodo futuro qualquer
+  instrucoes:
+    1- ler as tabelas fornecidas usando pandas e sqlalchemy.
+    2- a conexão com o banco de dados é dado por postgresql://teste_vinna_owner:y0bEonaD9fPe@ep-bold-art-a5fk12bt.us-east-2.aws.neon.tech/teste_vinna?sslmode=require
+    3- GERAR SOMENTE CÓDIGO PYTHON, NAO DEVE GERAR NENHUM TIPO DE DESCRIÇÃO DO CÓDIGO
+    4- a prediçao para o periodo desejado deve usar a biblioteca prophet, from prophet import Prophet
+    5- o resultado final deve ser dado por uma funçao chamada estimativa.
+    6- a funcao estimativa nao tem nenhuma variavel de entrada
+    7- TEM que utilizar 1 ano e meio de dado para treinar o modelo.
+    8- a estimativa TEM QUE ser diária, ou seja, TEM que ter um unico valor por dia
+    9- o codigo nao deve ter a funçao print
+   10- o retorno da funçao deve ser um pandas dataframe com o resultado
+
+query_2:
+  objetivo: gerar um gráfico para responder a pergunta e seguindo as instruções
+  instrucoes:
+      1- ler as tabelas fornecidas usando pandas e sqlalchemy.
+      2- a conexão com o banco de dados é dado por postgresql://teste_vinna_owner:y0bEonaD9fPe@ep-bold-art-a5fk12bt.us-east-2.aws.neon.tech/teste_vinna?sslmode=require
+      3- toda data e string na query sql deve seguir os exemplos, '2024-01-01, 'carro'
+      4- o gráfico deve ser feito usando a biblioteca seaborn.
+      5- o gráfico deve ser salvo em um arquivo .png na pasta resultado_python
+      6- o resultado final deve ser dado por uma funçao chamada estimativa.
+      7- a funcao estimativa nao tem nenhuma variavel de entrada
+      8- o return da função estimativa é o nome da imagem salva
+      9- NAO deve ter comentario algum, APENAS codigo 
+      10- o codigo nao deve ter a funçao print
+      11- o retorno da funçao deve ser somente o nome do arquivo salvo, NAO deve ter o caminho da pasta
+      12- deve usar o read_sql_query para eler as tabelas
+      13- NAO PODE TER espaços brancos no inicio do código
+
+query_3:
+  objetivo: gerar um gráfico de uma predição ou estimativa para responder a pergunta e seguindo as instruções
+  instrucoes:
+      1- ler as tabelas fornecidas usando pandas e sqlalchemy.
+      2- deve usar o read_sql_query para eler as tabelas
+      3- a conexão com o banco de dados é dado por postgresql://teste_vinna_owner:y0bEonaD9fPe@ep-bold-art-a5fk12bt.us-east-2.aws.neon.tech/teste_vinna?sslmode=require
+      4- toda data e string na query sql deve seguir os exemplos, '2024-01-01, 'carro'
+      5- a prediçao para o periodo desejado deve usar a biblioteca prophet.
+      6- importar a biblioteca da seguinte maneira from prophet import Prophet
+      6- para treinar o modelo deve utilizar 1 ano de dado
+      7- o gráfico deve ser feito usando a biblioteca seaborn.
+      8- o gráfico deve ser salvo em um arquivo .png na pasta resultado_python
+      9- o resultado final deve ser dado por uma funçao chamada estimativa.
+      10- a funcao estimativa nao tem nenhuma variavel de entrada
+      11- o return da função estimativa é o nome da imagem salva
+      12- NAO deve ter comentario algum, APENAS codigo 
+      13- GERAR SOMENTE CÓDIGO PYTHON, NAO DEVE GERAR NENHUM TIPO DE DESCRIÇÃO DO CÓDIGO
+      14- o codigo nao deve ter a funçao print
+      15- o retorno da funçao deve ser somente o nome do arquivo salvo, NAO deve ter o caminho da pasta
+      16- a estimativa deve ser diária
+
+
+
+
+

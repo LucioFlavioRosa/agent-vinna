@@ -1,0 +1,5 @@
+dados:
+  "customers and orders": id_consumidor
+  "orders and products": id_produto
+  "products and reviews": id_produto
+  "orders and reviews": id_compra

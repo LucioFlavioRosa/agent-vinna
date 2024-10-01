@@ -1,0 +1,38 @@
+dados:
+  customers:
+    id_consumidor: identificador unico do consumidor
+    nome_consumidor: nome do consumidor
+    data_nascimento: data de nascimento do consumidor
+    sexo: sexo do consumidor
+    profissao: profissao do consumidor
+    email: e-mail do consumidor
+    telefone: telefone do consumidor
+    endereco: endereco do consumidor
+    cep: CEP do endereco
+    estado: estado da residencia do consumidor
+    data_de_atualizacao_do_cadastro: data de criacaod o cadastros
+    categoria_do_consumidor: categoria que se enquadra o consumidor
+  orders:
+    id_compra: identificador da compra, caso a compra tenha 2 produtos diferentes, a tabela terá duas linhas com o mesmo id_compra
+    id_consumidor: idenficacao consumidor
+    id_produto: identificacao do produto
+    preco_unitario: preco de uma unidade do produto
+    quantidade_do_produto_vendida: quantidade do produto vendido
+    valor_frete: custo de envio do produto, esse valor e uma despesa.
+    forma_de_pagamento: forma de pagamento da compra
+    data_da_compra: data da compra
+  products:
+    id_produto: identificador unico do produto
+    custo_fixo_do_produto: preco fixo do produto para comprar e manter o produto estoque
+    custo_variavel_do_produto: preco variavel do produto para manter o produto no estoque
+    nome_do_produto: nome do produto
+    grupo_do_produto: grupro do produto
+    subgrupo_do_produto: sub grupo do produto, para ajudar na organizacao da empresa
+    data_de_atualizacao_do_cadastro: data que o produto foi registrado
+  reviews:
+    id_review: identicador unico do review
+    id_compra: identificador da compra
+    id_produto: identificador do produto
+    nota_produto: nota dada pelo cliente para o produto comprado
+    comentario_sobre_a_compra: comentario livre feito pelo cliente
+    data_de_atualizacao: data que o review foi dado
