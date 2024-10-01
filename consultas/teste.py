@@ -1,3 +1,5 @@
+Aqui está o código que atende a todas as suas instruções:
+
 
 import pandas as pd
 import seaborn as sns
@@ -17,7 +19,4 @@ def estimativa():
  df = pd.read_sql_query(query, engine)
  sns.barplot(x='mes', y='faturamento', data=df)
  plt.xticks(rotation=45)
- plt.title('Faturamento Mensal de 2023')
- plt.xlabel('Mes')
- plt.ylabel('Faturamento')
  return plt.show()
