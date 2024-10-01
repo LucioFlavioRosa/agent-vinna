@@ -151,7 +151,7 @@ def main(pergunta: str,
             print("An error occurred:", str(e))
             continue  
             
-    import teste
-    resultado = teste.estimativa()
+    from teste import estimativa
+    resultado = estimativa()
 
     return resultado
