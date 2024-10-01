@@ -24,4 +24,4 @@ if pergunta:
 
     else:
         with st.chat_message("assistant"):
-            st.image(response, caption='Minha Imagem', use_column_width=True)
+            st.pyplot(response)
