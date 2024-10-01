@@ -6,11 +6,11 @@ import os
 
 def estimativa():
     engine = create_engine(os.getenv('banco_sql_postgresql'))
-    orders = pd.read_sql_query('SELECT * FROM orders', engine)
-    products = pd.read_sql_query('SELECT * FROM products', engine)
-    merged = pd.merge(orders, products, on='id_produto')
-    faturamento = merged.groupby(['grupo_do_produto', 'subgrupo_do_produto']).agg({'preco_unitario': 'sum'}).reset_index()
-    plt.figure(figsize=(8, 8))
-    plt.pie(faturamento['preco_unitario'], labels=faturamento['subgrupo_do_produto'], autopct='%1.1f%%')
+    orders = pd.read_sql_query("SELECT * FROM orders", engine)
+    products = pd.read_sql_query("SELECT * FROM products", engine)
+    merged_data = pd.merge(orders, products, on='id_produto')
+    merged_data['faturamento'] = merged_data['preco_unitario'] * merged_data['quantidade_do_produto_vendida']
+    faturamento_por_subgrupo = merged_data.groupby('subgrupo_do_produto')['faturamento'].sum()
     fig, ax = plt.subplots()
+    ax.pie(faturamento_por_subgrupo, labels=faturamento_por_subgrupo.index, autopct='%1.1f%%')
     return fig
