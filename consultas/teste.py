@@ -1,32 +1,32 @@
 
 import pandas as pd
-import seaborn as sns
 import matplotlib.pyplot as plt
+import seaborn as sns
 from sqlalchemy import create_engine
 import os
 
 def estimativa():
-    engine = create_engine(os.getenv('banco_sql_postgresql'))
-    query = """
-    SELECT 
-        DATE_TRUNC('month', o.data_da_compra) AS mes,
-        SUM(o.preco_unitario * o.quantidade_do_produto_vendida) AS faturamento
-    FROM 
-        orders o
-    JOIN 
-        products p ON o.id_produto = p.id_produto
-    WHERE 
-        p.grupo_do_produto = 'padaria' AND 
-        o.data_da_compra BETWEEN '2023-01-01' AND '2023-12-31'
-    GROUP BY 
-        mes
-    ORDER BY 
-        mes;
-    """
-    df = pd.read_sql_query(query, engine)
+    engine = create_engine(os.environ['banco_sql_postgresql'])
+    query_orders = "SELECT id_produto, preco_unitario, quantidade_do_produto_vendida, data_da_compra FROM orders WHERE data_da_compra BETWEEN '2023-07-01' AND '2023-07-31'"
+    query_products = "SELECT id_produto, grupo_do_produto FROM products"
+    
+    orders = pd.read_sql_query(query_orders, engine)
+    products = pd.read_sql_query(query_products, engine)
+    
+    merged = pd.merge(orders, products, on='id_produto')
+    merged['faturamento'] = merged['preco_unitario'] * merged['quantidade_do_produto_vendida']
+    
+    faturamento_por_grupo = merged.groupby('grupo_do_produto')['faturamento'].sum().reset_index()
+    faturamento_por_grupo = faturamento_por_grupo.sort_values(by='faturamento', ascending=False)
+    faturamento_por_grupo['cumulative'] = faturamento_por_grupo['faturamento'].cumsum()
+    faturamento_por_grupo['cumulative_percentage'] = 100 * faturamento_por_grupo['cumulative'] / faturamento_por_grupo['faturamento'].sum()
+    
     fig, ax = plt.subplots()
-    sns.barplot(x='mes', y='faturamento', data=df, ax=ax)
-    ax.set_title('Faturamento Mensal em 2023 do Grupo Padaria')
-    ax.set_xlabel('Mes')
+    sns.barplot(x='grupo_do_produto', y='faturamento', data=faturamento_por_grupo, ax=ax)
+    ax2 = ax.twinx()
+    sns.lineplot(x='grupo_do_produto', y='cumulative_percentage', data=faturamento_por_grupo, ax=ax2, color='r', marker='o')
+    
     ax.set_ylabel('Faturamento')
+    ax2.set_ylabel('Porcentagem Cumulativa')
+    
     return fig
