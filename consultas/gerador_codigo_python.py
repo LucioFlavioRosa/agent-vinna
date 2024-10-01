@@ -143,6 +143,7 @@ def main(pergunta: str,
                 repo.create_file(file_path, "Create generated file", codigo_final)
 
             time.sleep(2)
+            print("foi nessa parte")
             import teste
 
             resultado = teste.estimativa()
