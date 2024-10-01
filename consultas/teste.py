@@ -6,11 +6,11 @@ import matplotlib.pyplot as plt
 import os
 
 def estimativa():
-    engine = sqlalchemy.create_engine(os.getenv('banco_sql_postgresql'))
+    engine = sqlalchemy.create_engine(os.environ['banco_sql_postgresql'])
     query = """
     SELECT DATE_TRUNC('month', data_da_compra) AS mes, SUM(preco_unitario * quantidade_do_produto_vendida) AS faturamento
     FROM orders
-    WHERE DATE_PART('year', data_da_compra) = 2023
+    WHERE EXTRACT(YEAR FROM data_da_compra) = 2023
     GROUP BY mes
     ORDER BY mes;
     """
@@ -18,6 +18,6 @@ def estimativa():
     fig, ax = plt.subplots()
     sns.barplot(x='mes', y='faturamento', data=df, ax=ax)
     ax.set_title('Faturamento Mensal de 2023')
-    ax.set_xlabel('Meses')
+    ax.set_xlabel('Mes')
     ax.set_ylabel('Faturamento')
     return fig
