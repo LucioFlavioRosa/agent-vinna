@@ -1,39 +1,17 @@
 
 import pandas as pd
-from sqlalchemy import create_engine
-from prophet import Prophet
-import seaborn as sns
 import matplotlib.pyplot as plt
+import seaborn as sns
+from sqlalchemy import create_engine
 import os
 
 def estimativa():
-    engine = create_engine(os.getenv('banco_sql_postgresql'))
-    orders_query = "SELECT * FROM orders WHERE data_da_compra >= '2023-07-01' AND data_da_compra < '2023-08-01'"
-    products_query = "SELECT * FROM products"
-
-    orders = pd.read_sql_query(orders_query, engine)
-    products = pd.read_sql_query(products_query, engine)
-
+    engine = create_engine(os.environ['banco_sql_postgresql'])
+    orders = pd.read_sql_query("SELECT id_produto, preco_unitario, quantidade_do_produto_vendida FROM orders WHERE data_da_compra >= '2023-07-01' AND data_da_compra <= '2023-07-31'", engine)
+    products = pd.read_sql_query("SELECT id_produto, subgrupo_do_produto FROM products", engine)
     merged_data = pd.merge(orders, products, on='id_produto')
     merged_data['faturamento'] = merged_data['preco_unitario'] * merged_data['quantidade_do_produto_vendida']
-    faturamento_julho = merged_data.groupby(['subgrupo_do_produto', 'data_da_compra']).agg({'faturamento': 'sum'}).reset_index()
-
-    daily_faturamento = faturamento_julho.groupby('data_da_compra').agg({'faturamento': 'sum'}).reset_index()
-    daily_faturamento.columns = ['ds', 'y']
-
-    model = Prophet()
-    model.fit(daily_faturamento)
-
-    future = model.make_future_dataframe(periods=30)
-    forecast = model.predict(future)
-
-    plt.figure(figsize=(10, 6))
-    sns.lineplot(data=forecast, x='ds', y='yhat')
-    plt.title('Previsão de Faturamento Diário')
-    plt.xlabel('Data')
-    plt.ylabel('Faturamento')
-    plt.xticks(rotation=45)
-    plt.tight_layout()
-
-    plt.savefig('resultado_python/forecast_faturamento.png')
-    return 'forecast_faturamento.png'
+    faturamento_por_subgrupo = merged_data.groupby('subgrupo_do_produto')['faturamento'].sum().reset_index()
+    fig, ax = plt.subplots()
+    sns.pieplot(data=faturamento_por_subgrupo, x='faturamento', y='subgrupo_do_produto', ax=ax)
+    return fig
