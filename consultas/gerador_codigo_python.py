@@ -4,6 +4,7 @@ import time
 import datetime
 
 from openai import OpenAI
+from github import Github
 
 from conferencia import confere_python
 
@@ -125,11 +126,15 @@ def main(pergunta: str,
                 else:
                     response = False
 
-            if os.path.exists('teste.py'):
-                os.remove('teste.py')
-
-            with open('teste.py', 'w') as file:
-                file.write(codigo_final)
+            #if os.path.exists('teste.py'):
+             #   os.remove('teste.py')
+          
+            g = Github(os.environ.get('chave_git'))
+            repo = g.get_repo('LucioFlavioRosa/agent-vinna')
+            repo.create_file('teste.py', 'upload python code', codigo_final, branch='main')
+          
+            #with open('teste.py', 'w') as file:
+             #   file.write(codigo_final)
 
             time.sleep(2)
             import teste
