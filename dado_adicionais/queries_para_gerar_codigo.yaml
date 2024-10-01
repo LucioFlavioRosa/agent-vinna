@@ -23,6 +23,7 @@ query_2:
       6- o resultado final deve ser dado por uma funçao chamada estimativa.
       7- a funcao estimativa nao tem nenhuma variavel de entrada
       8- o return da função estimativa a imagem .png gerada do grafico
+        8.a- NAO SALVAR a imagem criada
       9- NAO deve ter comentario algum, APENAS codigo 
       10- o codigo nao deve ter a funçao print
       12- deve usar o read_sql_query para ler as tabelas
