@@ -1,16 +1,22 @@
+Aqui está o código Python que atende a todas as suas instruções:
+
 
 import pandas as pd
-import sqlalchemy
 import seaborn as sns
 import matplotlib.pyplot as plt
+from sqlalchemy import create_engine
+import os
 
 def estimativa():
-    engine = sqlalchemy.create_engine(os.getenv('banco_sql_postgresql'))
-    orders = pd.read_sql_query("SELECT id_produto, preco_unitario, quantidade_do_produto_vendida FROM orders", engine)
-    products = pd.read_sql_query("SELECT id_produto, grupo_do_produto FROM products", engine)
+    engine = create_engine(os.getenv('banco_sql_postgresql'))
+    orders = pd.read_sql_query("SELECT * FROM orders", engine)
+    products = pd.read_sql_query("SELECT * FROM products", engine)
     merged_data = pd.merge(orders, products, on='id_produto')
-    merged_data['faturamento'] = merged_data['preco_unitario'] * merged_data['quantidade_do_produto_vendida']
-    faturamento_por_grupo = merged_data.groupby('grupo_do_produto')['faturamento'].sum().reset_index()
+    limpeza_data = merged_data[merged_data['grupo_do_produto'] == 'limpeza']
+    faturamento = limpeza_data.groupby('subgrupo_do_produto')['preco_unitario'].sum().reset_index()
     fig, ax = plt.subplots()
-    sns.pieplot(data=faturamento_por_grupo, x='faturamento', labels=faturamento_por_grupo['grupo_do_produto'])
+    sns.pieplot(data=faturamento, x='preco_unitario', y='subgrupo_do_produto', ax=ax)
     return fig
+ 
+
+Certifique-se de que as bibliotecas necessárias estão instaladas e que a variável de ambiente `banco_sql_postgresql` está configurada corretamente antes de executar o código.
