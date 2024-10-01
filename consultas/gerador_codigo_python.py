@@ -166,10 +166,10 @@ def main(pergunta: str,
              #   repo.update_file(file_path, "Update generated file", codigo_final, file.sha)
             #else:
              #   repo.create_file(file_path, "Create generated file", codigo_final)
-            exec(codigo_final)
+            #exec(codigo_final)
             #from consultas import teste
            
-            resultado = exec(codigo_final)
+            resultado = codigo_final
             break
           
         except Exception as e:
