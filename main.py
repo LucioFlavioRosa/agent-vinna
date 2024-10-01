@@ -26,7 +26,8 @@ if pergunta:
             st.dataframe(response)
     else:
         with st.chat_message("assistant"):
-            buf = BytesIO()
-            response.savefig(buf, format="png") # You can change the format if needed
-            buf.seek(0)
-            st.image(buf, caption="grafico pedido", use_column_width=True)
+            #buf = BytesIO()
+            #response.savefig(buf, format="png") # You can change the format if needed
+            #buf.seek(0)
+            #st.image(buf, caption="grafico pedido", use_column_width=True)
+            st.pyplot(response)
