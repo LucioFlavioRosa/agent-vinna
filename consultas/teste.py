@@ -6,19 +6,24 @@ from sqlalchemy import create_engine
 import os
 
 def estimativa():
-    engine = create_engine(os.environ['banco_sql_postgresql'])
-    query = """
-    SELECT DATE_TRUNC('month', o.data_da_compra) AS mes, SUM(o.preco_unitario * o.quantidade_do_produto_vendida + o.valor_frete) AS faturamento
-    FROM orders o
-    WHERE EXTRACT(YEAR FROM o.data_da_compra) = 2023
-    GROUP BY mes
-    ORDER BY mes;
-    """
-    df = pd.read_sql_query(query, engine)
+    engine = create_engine(os.getenv('banco_sql_postgresql'))
+    orders_query = "SELECT * FROM orders WHERE data_da_compra >= '2023-01-01' AND data_da_compra < '2024-01-01'"
+    products_query = "SELECT * FROM products WHERE grupo_do_produto = 'carro'"
+    
+    orders = pd.read_sql_query(orders_query, engine)
+    products = pd.read_sql_query(products_query, engine)
+    
+    merged_data = pd.merge(orders, products, on='id_produto')
+    merged_data['faturamento'] = merged_data['preco_unitario'] * merged_data['quantidade_do_produto_vendida']
+    merged_data['mes'] = merged_data['data_da_compra'].dt.to_period('M')
+    
+    faturamento_mensal = merged_data.groupby('mes')['faturamento'].sum().reset_index()
+    faturamento_mensal['mes'] = faturamento_mensal['mes'].dt.to_timestamp()
+    
     fig, ax = plt.subplots()
-    sns.barplot(x='mes', y='faturamento', data=df, ax=ax)
-    ax.set_title('Faturamento Mensal de 2023')
+    sns.barplot(x='mes', y='faturamento', data=faturamento_mensal, ax=ax)
+    ax.set_title('Faturamento Mensal de 2023 para o Grupo Carro')
     ax.set_xlabel('Mes')
-    ax.set_ylabel('Faturamento (R$)')
-    plt.xticks(rotation=45)
+    ax.set_ylabel('Faturamento')
+    
     return fig
