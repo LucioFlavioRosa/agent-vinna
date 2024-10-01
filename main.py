@@ -3,6 +3,8 @@ import agent_vinna
 
 import pandas as pd
 
+from io import BytesIO
+
 # Título do aplicativo
 st.title("Bem Vindo ao AGENT VINNA")
 
@@ -22,4 +24,7 @@ if pergunta:
     if type(response) == pd.DataFrame:
         st.dataframe(response)
     else:
-        st.pyplot(response)
+        buf = BytesIO()
+        response.savefig(buf, format="png") # You can change the format if needed
+        buf.seek(0)
+        st.image(buf, caption="My Plot", use_column_width=True)
