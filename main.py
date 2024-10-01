@@ -21,7 +21,7 @@ if pergunta:
     with st.spinner('O agente está buscando a melhor maneira de responder a sua pergunta!...'):
         response = agent_vinna.main(question=pergunta)
     
-    if type(responde) == pd.DataFrame:
+    if type(response) == pd.DataFrame:
         with st.chat_message("assistant"):
             st.dataframe(response)
     else:
