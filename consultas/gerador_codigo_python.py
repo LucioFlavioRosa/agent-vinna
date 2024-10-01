@@ -128,7 +128,7 @@ def main(pergunta: str,
           
             g = Github(os.environ.get('chave_git'))
             repo = g.get_repo('LucioFlavioRosa/agent-vinna')
-            file_path = "LucioFlavioRosa/agent-vinna/teste.py" 
+            file_path = "consultas/teste.py" 
 
             # Attempt to get the existing file (if it might already exist)
             try:
