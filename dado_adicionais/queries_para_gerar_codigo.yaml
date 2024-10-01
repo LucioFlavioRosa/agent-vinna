@@ -19,15 +19,13 @@ query_2:
       2- a conexão com o banco de dados é dado por pela variavel de ambiente banco_sql_postgresql
       3- toda data e string na query sql deve seguir os exemplos, '2024-01-01, 'carro'
       4- o gráfico deve ser feito usando a biblioteca seaborn.
-      5- o gráfico deve ser salvo em um arquivo .png na pasta resultado_python
-      6- o resultado final deve ser dado por uma funçao chamada estimativa.
-      7- a funcao estimativa nao tem nenhuma variavel de entrada
-      8- o return da função estimativa a imagem .png gerada do grafico
-        8.a- NAO SALVAR a imagem criada
-      9- NAO deve ter comentario algum, APENAS codigo 
-      10- o codigo nao deve ter a funçao print
-      12- deve usar o read_sql_query para ler as tabelas
-      13- NAO PODE TER espaços brancos no inicio do código
+      5- o resultado final deve ser dado por uma funçao chamada estimativa.
+      6- a funcao estimativa nao tem nenhuma variavel de entrada
+      7- o return da função estimativa a imagem .png gerada do grafico
+      8- NAO deve ter comentario algum, APENAS codigo 
+      9- o codigo nao deve ter a funçao print
+      10- deve usar o read_sql_query para ler as tabelas
+      11- NAO PODE TER espaços brancos no inicio do código
 
 query_3:
   objetivo: gerar um gráfico de uma predição ou estimativa para responder a pergunta e seguindo as instruções
