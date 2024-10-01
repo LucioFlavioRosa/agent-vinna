@@ -14,6 +14,30 @@ MODEL_NAME = "gpt-4o-mini"
 openai_client = OpenAI(api_key=OPENAI_API_KEY)
 current_time = datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
 
+def execute_python_code(code_string):
+    """
+    Executes a Python code string and returns the results (if any).
+
+    Args:
+        code_string: The Python code as a string.
+
+    Returns:
+        A dictionary containing the results of the code execution, 
+        including any variables or objects created.
+    """
+
+    # Create a dictionary to store the results
+    results = {}
+
+    # Define a function to capture variables created during execution
+    def capture_locals(local_vars):
+        results.update(local_vars)
+
+    # Execute the code string, passing the 'capture_locals' function as the 'locals' argument
+    exec(code_string, globals(), capture_locals)
+
+    return results
+
 def generate_code(pergunta: str,
                   descricao_tabelas: str,
                   nome_colunas: str,
@@ -142,9 +166,10 @@ def main(pergunta: str,
              #   repo.update_file(file_path, "Update generated file", codigo_final, file.sha)
             #else:
              #   repo.create_file(file_path, "Create generated file", codigo_final)
-            exec(codigo_final)
+            #exec(codigo_final)
             #from consultas import teste
-            resultado = estimativa() 
+            execution_results = execute_python_code(codigo_final)
+            resultado = execution_results['result'] 
             #resultado = teste.estimativa()
             break
           
