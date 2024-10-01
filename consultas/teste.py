@@ -1,32 +1,25 @@
 
 import pandas as pd
-import matplotlib.pyplot as plt
 import seaborn as sns
+import matplotlib.pyplot as plt
 from sqlalchemy import create_engine
 import os
 
 def estimativa():
     engine = create_engine(os.environ['banco_sql_postgresql'])
-    query_orders = "SELECT id_produto, preco_unitario, quantidade_do_produto_vendida, data_da_compra FROM orders WHERE data_da_compra BETWEEN '2023-07-01' AND '2023-07-31'"
-    query_products = "SELECT id_produto, grupo_do_produto FROM products"
-    
-    orders = pd.read_sql_query(query_orders, engine)
-    products = pd.read_sql_query(query_products, engine)
-    
-    merged = pd.merge(orders, products, on='id_produto')
-    merged['faturamento'] = merged['preco_unitario'] * merged['quantidade_do_produto_vendida']
-    
-    faturamento_por_grupo = merged.groupby('grupo_do_produto')['faturamento'].sum().reset_index()
-    faturamento_por_grupo = faturamento_por_grupo.sort_values(by='faturamento', ascending=False)
-    faturamento_por_grupo['cumulative'] = faturamento_por_grupo['faturamento'].cumsum()
-    faturamento_por_grupo['cumulative_percentage'] = 100 * faturamento_por_grupo['cumulative'] / faturamento_por_grupo['faturamento'].sum()
-    
+    orders = pd.read_sql_query("SELECT * FROM orders WHERE data_da_compra >= '2023-07-01' AND data_da_compra < '2023-08-01'", engine)
+    products = pd.read_sql_query("SELECT * FROM products", engine)
+    merged_data = pd.merge(orders, products, on='id_produto')
+    faturamento = merged_data.groupby('grupo_do_produto').apply(lambda x: (x['preco_unitario'] * x['quantidade_do_produto_vendida']).sum()).reset_index(name='faturamento')
+    faturamento = faturamento.sort_values(by='faturamento', ascending=False)
+    faturamento['cumulative'] = faturamento['faturamento'].cumsum()
+    faturamento['cumulative_percentage'] = faturamento['cumulative'] / faturamento['faturamento'].sum() * 100
     fig, ax = plt.subplots()
-    sns.barplot(x='grupo_do_produto', y='faturamento', data=faturamento_por_grupo, ax=ax)
+    sns.barplot(x='grupo_do_produto', y='faturamento', data=faturamento, ax=ax)
     ax2 = ax.twinx()
-    sns.lineplot(x='grupo_do_produto', y='cumulative_percentage', data=faturamento_por_grupo, ax=ax2, color='r', marker='o')
-    
+    sns.lineplot(x='grupo_do_produto', y='cumulative_percentage', data=faturamento, ax=ax2, color='r', marker='o')
+    ax2.axhline(80, ls='--', color='gray')
     ax.set_ylabel('Faturamento')
     ax2.set_ylabel('Porcentagem Cumulativa')
-    
+    ax.set_xlabel('Grupo de Produto')
     return fig
