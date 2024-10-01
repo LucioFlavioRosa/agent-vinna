@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from sqlalchemy import create_engine
 
 def estimativa():
- engine = create_engine(os.getenv('banco_sql_postgresql'))
+ engine = create_engine(os.environ['banco_sql_postgresql'])
  query = """
  SELECT DATE_TRUNC('month', data_da_compra) AS mes, SUM(preco_unitario * quantidade_do_produto_vendida) AS faturamento
  FROM orders
