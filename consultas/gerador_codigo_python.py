@@ -131,7 +131,19 @@ def main(pergunta: str,
           
             g = Github(os.environ.get('chave_git'))
             repo = g.get_repo('LucioFlavioRosa/agent-vinna')
-            repo.create_file('teste.py', 'upload python code', codigo_final, branch='main')
+            file_path = "LucioFlavioRosa/agent-vinna/teste.py" 
+
+            # Attempt to get the existing file (if it might already exist)
+            try:
+                file = repo.get_contents(file_path)
+            except:
+                file = None
+            
+            # Update or create the file
+            if file:
+                repo.update_file(file_path, "Update generated file", codigo_final, file.sha)
+            else:
+                repo.create_file(file_path, "Create generated file", codigo_final)
           
             #with open('teste.py', 'w') as file:
              #   file.write(codigo_final)
