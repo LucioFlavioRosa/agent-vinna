@@ -7,22 +7,26 @@ import os
 
 def estimativa():
     engine = create_engine(os.getenv('banco_sql_postgresql'))
-    orders_query = "SELECT * FROM orders WHERE data_da_compra >= '2023-01-01' AND data_da_compra < '2024-01-01'"
-    products_query = "SELECT * FROM products WHERE grupo_do_produto = 'carro'"
-    
-    orders = pd.read_sql_query(orders_query, engine)
-    products = pd.read_sql_query(products_query, engine)
-    
-    merged_data = pd.merge(orders, products, on='id_produto')
-    merged_data['faturamento'] = merged_data['preco_unitario'] * merged_data['quantidade_do_produto_vendida']
-    merged_data['mes'] = merged_data['data_da_compra'].dt.to_period('M')
-    
-    monthly_revenue = merged_data.groupby('mes')['faturamento'].sum().reset_index()
-    
+    query = """
+    SELECT 
+        EXTRACT(MONTH FROM o.data_da_compra) AS mes,
+        SUM(o.preco_unitario * o.quantidade_do_produto_vendida) AS faturamento
+    FROM 
+        orders o
+    JOIN 
+        products p ON o.id_produto = p.id_produto
+    WHERE 
+        p.grupo_do_produto = 'carro' AND 
+        EXTRACT(YEAR FROM o.data_da_compra) = 2023
+    GROUP BY 
+        mes
+    ORDER BY 
+        mes;
+    """
+    df = pd.read_sql_query(query, engine)
     fig, ax = plt.subplots()
-    sns.barplot(x='mes', y='faturamento', data=monthly_revenue, ax=ax)
-    ax.set_title('Faturamento Mensal de 2023 para o Grupo Carro')
-    ax.set_xlabel('Mes')
-    ax.set_ylabel('Faturamento')
-    
+    sns.barplot(x='mes', y='faturamento', data=df, ax=ax)
+    ax.set_title('Faturamento Mensal de 2023 - Grupo Carro')
+    ax.set_xlabel('Mês')
+    ax.set_ylabel('Faturamento (R$)')
     return fig
