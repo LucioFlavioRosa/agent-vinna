@@ -2,7 +2,7 @@ query_1:
   objetivo: calcular a estimativa de uma variavel qualquer em um periodo futuro qualquer
   instrucoes:
     1- ler as tabelas fornecidas usando pandas e sqlalchemy.
-    2- a conexão com o banco de dados é dado por postgresql://teste_vinna_owner:y0bEonaD9fPe@ep-bold-art-a5fk12bt.us-east-2.aws.neon.tech/teste_vinna?sslmode=require
+    2- a conexão com o banco de dados é dado pela variavel de ambiente banco_sql_postgresql
     3- GERAR SOMENTE CÓDIGO PYTHON, NAO DEVE GERAR NENHUM TIPO DE DESCRIÇÃO DO CÓDIGO
     4- a prediçao para o periodo desejado deve usar a biblioteca prophet, from prophet import Prophet
     5- o resultado final deve ser dado por uma funçao chamada estimativa.
@@ -16,7 +16,7 @@ query_2:
   objetivo: gerar um gráfico para responder a pergunta e seguindo as instruções
   instrucoes:
       1- ler as tabelas fornecidas usando pandas e sqlalchemy.
-      2- a conexão com o banco de dados é dado por postgresql://teste_vinna_owner:y0bEonaD9fPe@ep-bold-art-a5fk12bt.us-east-2.aws.neon.tech/teste_vinna?sslmode=require
+      2- a conexão com o banco de dados é dado por pela variavel de ambiente banco_sql_postgresql
       3- toda data e string na query sql deve seguir os exemplos, '2024-01-01, 'carro'
       4- o gráfico deve ser feito usando a biblioteca seaborn.
       5- o gráfico deve ser salvo em um arquivo .png na pasta resultado_python
@@ -34,7 +34,7 @@ query_3:
   instrucoes:
       1- ler as tabelas fornecidas usando pandas e sqlalchemy.
       2- deve usar o read_sql_query para eler as tabelas
-      3- a conexão com o banco de dados é dado por postgresql://teste_vinna_owner:y0bEonaD9fPe@ep-bold-art-a5fk12bt.us-east-2.aws.neon.tech/teste_vinna?sslmode=require
+      3- a conexão com o banco de dados é dado por pela variavel de ambiente banco_sql_postgresql
       4- toda data e string na query sql deve seguir os exemplos, '2024-01-01, 'carro'
       5- a prediçao para o periodo desejado deve usar a biblioteca prophet.
       6- importar a biblioteca da seguinte maneira from prophet import Prophet
