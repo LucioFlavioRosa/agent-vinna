@@ -17,4 +17,5 @@ def estimativa():
  df = pd.read_sql_query(query, engine)
  sns.barplot(x='mes', y='faturamento', data=df)
  plt.xticks(rotation=45)
+ plt.title('Faturamento Mensal de 2023')
  return plt.show()
