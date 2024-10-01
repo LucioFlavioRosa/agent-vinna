@@ -144,7 +144,6 @@ def main(pergunta: str,
 
             #time.sleep(2)
 
-            print('deu certo')
             break
           
 
