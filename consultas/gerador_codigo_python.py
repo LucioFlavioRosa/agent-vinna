@@ -125,9 +125,6 @@ def main(pergunta: str,
                     response = True
                 else:
                     response = False
-
-            #if os.path.exists('teste.py'):
-             #   os.remove('teste.py')
           
             g = Github(os.environ.get('chave_git'))
             repo = g.get_repo('LucioFlavioRosa/agent-vinna')
@@ -144,9 +141,6 @@ def main(pergunta: str,
                 repo.update_file(file_path, "Update generated file", codigo_final, file.sha)
             else:
                 repo.create_file(file_path, "Create generated file", codigo_final)
-          
-            #with open('teste.py', 'w') as file:
-             #   file.write(codigo_final)
 
             time.sleep(2)
             import teste
