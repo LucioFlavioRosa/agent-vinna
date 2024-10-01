@@ -21,7 +21,5 @@ if pergunta:
     
     if type(response) == pd.DataFrame:
         st.dataframe(response)
-    elif hasattr(response, 'plot'):
-        st.pyplot(response)
     else:
-        st.write(response)
+        st.pyplot(response)
