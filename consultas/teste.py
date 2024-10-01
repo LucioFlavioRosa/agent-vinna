@@ -10,25 +10,33 @@ def estimativa():
     engine = create_engine(os.getenv('banco_sql_postgresql'))
     
     query_orders = "SELECT * FROM orders WHERE data_da_compra >= '2023-07-01' AND data_da_compra < '2023-08-01'"
-    orders = pd.read_sql_query(query_orders, engine)
-    
     query_products = "SELECT * FROM products"
+    
+    orders = pd.read_sql_query(query_orders, engine)
     products = pd.read_sql_query(query_products, engine)
     
-    merged_data = orders.merge(products, on='id_produto')
+    merged_data = pd.merge(orders, products, on='id_produto')
+    merged_data['faturamento'] = merged_data['preco_unitario'] * merged_data['quantidade_do_produto_vendida']
     
-    faturamento_julho = merged_data.groupby(['subgrupo_do_produto']) \
-                                   .apply(lambda x: (x['preco_unitario'] * x['quantidade_do_produto_vendida']).sum()) \
-                                   .reset_index(name='faturamento')
+    faturamento_julho = merged_data.groupby(['subgrupo_do_produto'])['faturamento'].sum().reset_index()
     
-    faturamento_julho['subgrupo_do_produto'] = faturamento_julho['subgrupo_do_produto'].astype(str)
+    faturamento_julho.columns = ['subgrupo', 'faturamento']
     
-    sns.set_theme(style="whitegrid")
+    model = Prophet()
+    faturamento_julho['ds'] = pd.date_range(start='2024-07-01', periods=len(faturamento_julho), freq='D')
+    faturamento_julho['y'] = faturamento_julho['faturamento']
+    
+    model.fit(faturamento_julho[['ds', 'y']])
+    
+    future = model.make_future_dataframe(periods=30)
+    forecast = model.predict(future)
+    
     plt.figure(figsize=(10, 6))
-    plt.pie(faturamento_julho['faturamento'], labels=faturamento_julho['subgrupo_do_produto'], autopct='%1.1f%%')
-    plt.title('Faturamento de Julho de 2024 por Subgrupo - Grupo Padaria')
+    sns.barplot(data=faturamento_julho, x='subgrupo', y='faturamento')
+    plt.title('Faturamento por Subgrupo - Julho 2024')
+    plt.xticks(rotation=45)
+    plt.tight_layout()
     
-    plt.savefig('resultado_python/grafico_faturamento_julho_2024.png')
-    plt.close()
+    plt.savefig('resultado_python/faturamento_julho_2024.png')
     
-    return 'grafico_faturamento_julho_2024.png'
+    return 'faturamento_julho_2024.png'
