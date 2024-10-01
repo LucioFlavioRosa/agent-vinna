@@ -21,7 +21,8 @@ query_2:
       4- o gráfico deve ser feito usando a biblioteca seaborn.
       5- o resultado final deve ser dado por uma funçao chamada estimativa.
       6- a funcao estimativa nao tem nenhuma variavel de entrada
-      7- o return da função estimativa é o plt.show()
+      6- tem que usar fig, ax = plt.subplots()
+      7- o return da função estimativa é fig
       8- NAO salvar a figura, nao pode usar plt.savefig
       8- NAO deve ter comentario algum, APENAS codigo 
       9- o codigo nao deve ter a funçao print
