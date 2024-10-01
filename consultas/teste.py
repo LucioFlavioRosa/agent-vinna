@@ -1,7 +1,7 @@
 
 import pandas as pd
-import seaborn as sns
 import matplotlib.pyplot as plt
+import seaborn as sns
 from sqlalchemy import create_engine
 import os
 
@@ -12,7 +12,7 @@ def estimativa():
     orders = pd.read_sql_query(query_orders, engine)
     products = pd.read_sql_query(query_products, engine)
     merged_data = pd.merge(orders, products, on='id_produto')
-    faturamento = merged_data.groupby('grupo_do_produto').agg({'preco_unitario': 'sum'}).reset_index()
+    faturamento = merged_data.groupby('grupo_do_produto').apply(lambda x: (x['preco_unitario'] * x['quantidade_do_produto_vendida']).sum()).reset_index(name='faturamento')
     fig, ax = plt.subplots()
-    sns.pieplot(data=faturamento, x='preco_unitario', labels=faturamento['grupo_do_produto'])
+    sns.pieplot(data=faturamento, x='faturamento', labels=faturamento['grupo_do_produto'])
     return fig
