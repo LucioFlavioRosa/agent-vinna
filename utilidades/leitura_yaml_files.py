@@ -3,9 +3,8 @@ import yaml
 
 from pathlib import Path
 
-
 def leitura(arquivo: str) -> dict:
-    caminho = "agent-vinna/dado_adicionais/"
+    caminho = "dado_adicionais/"
     print(caminho)
     arquivo_completo = caminho + arquivo
     if os.path.isfile(arquivo_completo):
