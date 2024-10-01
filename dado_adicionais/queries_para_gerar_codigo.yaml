@@ -29,27 +29,6 @@ query_2:
       9- o codigo nao deve ter a funçao print
       10- deve usar o read_sql_query para ler as tabelas
 
-query_3:
-  objetivo: gerar um gráfico de uma predição ou estimativa para responder a pergunta e seguindo as instruções
-  instrucoes:
-      1- ler as tabelas fornecidas usando pandas e sqlalchemy.
-      2- deve usar o read_sql_query para eler as tabelas
-      3- a conexão com o banco de dados é dado por pela variavel de ambiente banco_sql_postgresql
-      4- toda data e string na query sql deve seguir os exemplos, '2024-01-01, 'carro'
-      5- a prediçao para o periodo desejado deve usar a biblioteca prophet.
-      6- importar a biblioteca da seguinte maneira from prophet import Prophet
-      6- para treinar o modelo deve utilizar 1 ano de dado
-      7- o gráfico deve ser feito usando a biblioteca seaborn.
-      8- o gráfico deve ser salvo em um arquivo .png na pasta resultado_python
-      9- o resultado final deve ser dado por uma funçao chamada estimativa.
-      10- a funcao estimativa nao tem nenhuma variavel de entrada
-      11- o return da função estimativa é o nome da imagem salva
-      12- NAO deve ter comentario algum, APENAS codigo 
-      13- GERAR SOMENTE CÓDIGO PYTHON, NAO DEVE GERAR NENHUM TIPO DE DESCRIÇÃO DO CÓDIGO
-      14- o codigo nao deve ter a funçao print
-      15- o retorno da funçao deve ser somente o nome do arquivo salvo, NAO deve ter o caminho da pasta
-      16- a estimativa deve ser diária
-
 
 
 
