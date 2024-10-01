@@ -137,12 +137,12 @@ def main(pergunta: str,
                 file = None
             
             # Update or create the file
-            if file:
-                repo.update_file(file_path, "Update generated file", codigo_final, file.sha)
-            else:
-                repo.create_file(file_path, "Create generated file", codigo_final)
+            #if file:
+            #    repo.update_file(file_path, "Update generated file", codigo_final, file.sha)
+            #else:
+             #   repo.create_file(file_path, "Create generated file", codigo_final)
 
-            time.sleep(2)
+            #time.sleep(2)
             
             import teste
             resultado = teste.estimativa()
