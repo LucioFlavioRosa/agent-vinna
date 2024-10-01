@@ -1,9 +1,11 @@
+Aqui está o código que atende às suas instruções:
 
-import os
+
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sqlalchemy import create_engine
+import os
 
 def estimativa():
  engine = create_engine(os.environ['banco_sql_postgresql'])
@@ -18,7 +20,9 @@ def estimativa():
  fig, ax = plt.subplots()
  sns.barplot(x='mes', y='faturamento', data=df, ax=ax)
  ax.set_title('Faturamento Mensal de 2023')
- ax.set_xlabel('Mês')
+ ax.set_xlabel('Mes')
  ax.set_ylabel('Faturamento')
- plt.xticks(rotation=45)
  return fig
+ 
+
+Este código lê os dados da tabela `orders`, calcula o faturamento mensal de 2023 e gera um gráfico de barras usando a biblioteca Seaborn.
