@@ -169,7 +169,7 @@ def main(pergunta: str,
             exec(codigo_final)
             #from consultas import teste
            
-            resultado = estimativa()
+            resultado = exec(codigo_final)
             break
           
         except Exception as e:
