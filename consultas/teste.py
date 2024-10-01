@@ -1,7 +1,7 @@
 
 import pandas as pd
-import matplotlib.pyplot as plt
 import seaborn as sns
+import matplotlib.pyplot as plt
 from sqlalchemy import create_engine
 import os
 
@@ -19,5 +19,5 @@ def estimativa():
     sns.barplot(x='mes', y='faturamento', data=df, ax=ax)
     ax.set_title('Faturamento Mensal de 2023')
     ax.set_xlabel('Mes')
-    ax.set_ylabel('Faturamento')
+    ax.set_ylabel('Faturamento (R$)')
     return fig
