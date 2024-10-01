@@ -127,24 +127,25 @@ def main(pergunta: str,
                 else:
                     response = False
           
-            g = Github(os.environ.get('chave_git'))
-            repo = g.get_repo('LucioFlavioRosa/agent-vinna')
-            file_path = "consultas/teste.py" 
+            #g = Github(os.environ.get('chave_git'))
+            #repo = g.get_repo('LucioFlavioRosa/agent-vinna')
+            #file_path = "consultas/teste.py" 
 
             # Attempt to get the existing file (if it might already exist)
-            try:
-                file = repo.get_contents(file_path)
-            except:
-                file = None
+            #try:
+             #   file = repo.get_contents(file_path)
+            #except:
+             #   file = None
             
             # Update or create the file
-            if file:
-                repo.update_file(file_path, "Update generated file", codigo_final, file.sha)
-            else:
-                repo.create_file(file_path, "Create generated file", codigo_final)
-
-            from consultas import teste
-            resultado = teste.estimativa()
+            #if file:
+             #   repo.update_file(file_path, "Update generated file", codigo_final, file.sha)
+            #else:
+             #   repo.create_file(file_path, "Create generated file", codigo_final)
+            exec(codigo_final)
+            #from consultas import teste
+            resultado = estimativa() 
+            #resultado = teste.estimativa()
             break
           
         except Exception as e:
