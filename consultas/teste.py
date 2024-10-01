@@ -1,5 +1,3 @@
-Aqui está o código que atende às suas especificações:
-
 
 import os
 import pandas as pd
@@ -17,7 +15,6 @@ def estimativa():
  ORDER BY mes;
  """
  df = pd.read_sql_query(query, engine)
- plt.figure(figsize=(10, 6))
  sns.barplot(x='mes', y='faturamento', data=df)
  plt.title('Faturamento Mensal de 2023')
  plt.xlabel('Mes')
