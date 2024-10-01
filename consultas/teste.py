@@ -1,20 +1,18 @@
-Aqui está o código que atende a todas as suas instruções:
-
 
 import pandas as pd
-import sqlalchemy
-import seaborn as sns
 import matplotlib.pyplot as plt
+import seaborn as sns
+from sqlalchemy import create_engine
+import os
 
 def estimativa():
-    engine = sqlalchemy.create_engine(os.getenv('banco_sql_postgresql'))
-    orders = pd.read_sql_query("SELECT * FROM orders WHERE data_da_compra >= '2023-05-01' AND data_da_compra < '2023-06-01'", engine)
-    products = pd.read_sql_query("SELECT * FROM products", engine)
+    engine = create_engine(os.getenv('banco_sql_postgresql'))
+    query_orders = "SELECT * FROM orders WHERE data_da_compra >= '2023-05-01' AND data_da_compra < '2023-06-01'"
+    query_products = "SELECT * FROM products"
+    orders = pd.read_sql_query(query_orders, engine)
+    products = pd.read_sql_query(query_products, engine)
     merged_data = pd.merge(orders, products, on='id_produto')
-    faturamento = merged_data.groupby('grupo_do_produto').agg({'preco_unitario': 'sum'}).reset_index()
+    faturamento = merged_data.groupby('grupo_do_produto').apply(lambda x: (x['preco_unitario'] * x['quantidade_do_produto_vendida']).sum()).reset_index(name='faturamento')
     fig, ax = plt.subplots()
-    sns.pie(faturamento['preco_unitario'], labels=faturamento['grupo_do_produto'], autopct='%1.1f%%', ax=ax)
+    sns.pieplot(data=faturamento, x='faturamento', labels=faturamento['grupo_do_produto'])
     return fig
- 
-
-Certifique-se de ter as bibliotecas necessárias instaladas e que a variável de ambiente `banco_sql_postgresql` está configurada corretamente.
