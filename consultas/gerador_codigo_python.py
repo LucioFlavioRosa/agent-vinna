@@ -143,14 +143,15 @@ def main(pergunta: str,
              #   repo.create_file(file_path, "Create generated file", codigo_final)
 
             #time.sleep(2)
-            
-            import teste
-            resultado = teste.estimativa()
-            break
+
+            print('deu certo')
+          
 
         except Exception as e:
             print("An error occurred:", str(e))
-            continue  # On any error, continue with the loop
-
+            continue  
+            
+    import teste
+    resultado = teste.estimativa()
 
     return resultado
