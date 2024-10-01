@@ -128,7 +128,7 @@ def main(pergunta: str,
           
             g = Github(os.environ.get('chave_git'))
             repo = g.get_repo('LucioFlavioRosa/agent-vinna')
-            file_path = "consultas/teste.py" 
+            file_path = "/mount/src/agent-vinna/teste.py" 
 
             # Attempt to get the existing file (if it might already exist)
             try:
@@ -137,21 +137,19 @@ def main(pergunta: str,
                 file = None
             
             # Update or create the file
-            #if file:
-            #    repo.update_file(file_path, "Update generated file", codigo_final, file.sha)
-            #else:
-             #   repo.create_file(file_path, "Create generated file", codigo_final)
+            if file:
+                repo.update_file(file_path, "Update generated file", codigo_final, file.sha)
+            else:
+                repo.create_file(file_path, "Create generated file", codigo_final)
 
-            #time.sleep(2)
+            from teste import estimativa
+            resultado = estimativa()
 
             break
           
-
         except Exception as e:
             print("An error occurred:", str(e))
             continue  
             
-    from teste import estimativa
-    resultado = estimativa()
-
+  
     return resultado
