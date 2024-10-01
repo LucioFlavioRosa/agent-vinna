@@ -21,14 +21,10 @@ if pergunta:
     with st.spinner('O agente está buscando a melhor maneira de responder a sua pergunta!...'):
         response = agent_vinna.main(question=pergunta)
     
-    if type(response) == pd.DataFrame:
+    if type(exec(response)) == pd.DataFrame:
         with st.chat_message("assistant"):
-            st.dataframe(response)
+            st.dataframe(exec(response))
     else:
         with st.chat_message("assistant"):
-            #buf = BytesIO()
-            #response.savefig(buf, format="png") # You can change the format if needed
-            #buf.seek(0)
-            #st.image(buf, caption="grafico pedido", use_column_width=True)
             exec(response)
             st.pyplot(fig)
