@@ -5,7 +5,7 @@ from pathlib import Path
 
 
 def leitura(arquivo: str) -> dict:
-    caminho = "mount/src/agent-vinna/dado_adicionais/"
+    caminho = "agent-vinna/dado_adicionais/"
     print(caminho)
     arquivo_completo = caminho + arquivo
     if os.path.isfile(arquivo_completo):
