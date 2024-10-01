@@ -16,8 +16,8 @@ pergunta = st.text_input("Qual a sua pergunta?")
 
 if pergunta:
 
-    #with st.spinner('O agente está buscando a melhor maneira de responder a sua pergunta!...'):
-    response = agent_vinna.main(question=pergunta)
+    with st.spinner('O agente está buscando a melhor maneira de responder a sua pergunta!...'):
+        response = agent_vinna.main(question=pergunta)
     
     if type(response) == pd.DataFrame:
         st.dataframe(response)
