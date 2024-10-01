@@ -1,11 +1,9 @@
-Aqui está o código que atende às suas instruções:
 
-
+import os
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sqlalchemy import create_engine
-import os
 
 def estimativa():
  engine = create_engine(os.getenv('banco_sql_postgresql'))
