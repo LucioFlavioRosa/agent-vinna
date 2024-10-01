@@ -19,9 +19,9 @@ if pergunta:
     response = agent_vinna.main(question=pergunta)
 
     if type(response) == pd.DataFrame:
-       # with st.chat_message("assistant"):
         st.dataframe(response)
 
-    else:
-       #with st.chat_message("assistant"):
+    elif hasattr(response, 'plot'):
         st.pyplot(response)
+    else:
+        st.write(response)
