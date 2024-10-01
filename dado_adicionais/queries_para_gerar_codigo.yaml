@@ -22,6 +22,7 @@ query_2:
       5- o resultado final deve ser dado por uma funçao chamada estimativa.
       6- a funcao estimativa nao tem nenhuma variavel de entrada
       7- o return da função estimativa a imagem .png gerada do grafico
+      8- NAO salvar a figura, nao pode usar plt.savefig
       8- NAO deve ter comentario algum, APENAS codigo 
       9- o codigo nao deve ter a funçao print
       10- deve usar o read_sql_query para ler as tabelas
