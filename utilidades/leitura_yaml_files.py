@@ -6,6 +6,7 @@ from pathlib import Path
 
 def leitura(arquivo: str) -> dict:
     caminho = Path(__file__).parent
+    print(caminho)
     arquivo_completo = caminho /"dados_adicionais" / arquivo
     if os.path.isfile(arquivo_completo):
         with open(arquivo_completo, 'r') as file:
