@@ -1,9 +1,9 @@
 
-import os
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 from sqlalchemy import create_engine
+import os
 
 def estimativa():
  engine = create_engine(os.getenv('banco_sql_postgresql'))
@@ -14,12 +14,11 @@ def estimativa():
  GROUP BY mes
  ORDER BY mes;
  """
- df = pd.read_sql_query(query, engine)
- plt.figure(figsize=(10, 6))
- sns.barplot(x='mes', y='faturamento', data=df)
+ dados = pd.read_sql_query(query, engine)
+ sns.barplot(x='mes', y='faturamento', data=dados)
  plt.title('Faturamento Mensal de 2023')
- plt.xlabel('Mes')
- plt.ylabel('Faturamento')
+ plt.xlabel('Mês')
+ plt.ylabel('Faturamento (R$)')
  plt.xticks(rotation=45)
  plt.tight_layout()
  plt.savefig('faturamento_mensal_2023.png')
