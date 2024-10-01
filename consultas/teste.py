@@ -1,23 +1,23 @@
 
 import pandas as pd
-import matplotlib.pyplot as plt
+import sqlalchemy
 import seaborn as sns
-from sqlalchemy import create_engine
+import matplotlib.pyplot as plt
 import os
 
 def estimativa():
-    engine = create_engine(os.environ['banco_sql_postgresql'])
+    engine = sqlalchemy.create_engine(os.getenv('banco_sql_postgresql'))
     query = """
-    SELECT DATE(data_da_compra) AS data_compra, SUM(preco_unitario * quantidade_do_produto_vendida) AS faturamento
-    FROM orders
-    WHERE DATE(data_da_compra) BETWEEN '2023-01-01' AND '2023-12-31'
-    GROUP BY DATE(data_da_compra)
-    ORDER BY DATE(data_da_compra);
+    SELECT DATE_TRUNC('month', o.data_da_compra) AS mes, SUM(o.preco_unitario * o.quantidade_do_produto_vendida) AS faturamento
+    FROM orders o
+    WHERE o.data_da_compra >= '2023-01-01' AND o.data_da_compra < '2024-01-01'
+    GROUP BY mes
+    ORDER BY mes;
     """
     df = pd.read_sql_query(query, engine)
     fig, ax = plt.subplots()
-    sns.lineplot(data=df, x='data_compra', y='faturamento', ax=ax)
-    ax.set_title('Faturamento de 2023')
-    ax.set_xlabel('Data')
+    sns.barplot(x='mes', y='faturamento', data=df, ax=ax)
+    ax.set_title('Faturamento Mensal de 2023')
+    ax.set_xlabel('Mes')
     ax.set_ylabel('Faturamento')
     return fig
