@@ -20,6 +20,7 @@ query_2:
       2- a conexão com o banco de dados é dado por pela variavel de ambiente banco_sql_postgresql
       3- toda data e string na query sql deve seguir os exemplos, '2024-01-01, 'carro'
       4- o gráfico deve ser feito usando a biblioteca seaborn.
+        4.1- SE pedir um grafico de PIZZA deve usar plt.pie
       5- o resultado final deve ser dado por uma funçao chamada estimativa.
       6- a funcao estimativa nao tem nenhuma variavel de entrada
       6- tem que usar fig, ax = plt.subplots()
