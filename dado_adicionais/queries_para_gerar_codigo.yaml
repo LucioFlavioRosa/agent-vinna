@@ -18,6 +18,7 @@ query_2:
       1-NAO DEVE ter texto, NAO DEVE ter comentario, NAO PODE TER espaços brancos no inicio do código, DEVE TER somente codigo python
       1- ler as tabelas fornecidas usando pandas e sqlalchemy.
       2- a conexão com o banco de dados é dado por pela variavel de ambiente banco_sql_postgresql
+        2.1- fazer todos os filtros e joins necessario nas queries de leitura do dados
       3- toda data e string na query sql deve seguir os exemplos, '2024-01-01, 'carro'
       4- o gráfico deve ser feito usando a biblioteca seaborn.
         4.1- SE pedir um grafico de PIZZA deve usar plt.pie
