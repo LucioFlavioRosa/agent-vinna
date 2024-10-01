@@ -1,9 +1,9 @@
 
+import os
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 from sqlalchemy import create_engine
-import os
 
 def estimativa():
  engine = create_engine(os.getenv('banco_sql_postgresql'))
@@ -16,10 +16,10 @@ def estimativa():
  """
  df = pd.read_sql_query(query, engine)
  plt.figure(figsize=(10, 6))
- sns.barplot(x='mes', y='faturamento', data=df, palette='viridis')
+ sns.barplot(x='mes', y='faturamento', data=df)
  plt.title('Faturamento Mensal de 2023')
  plt.xlabel('Mes')
- plt.ylabel('Faturamento (R$)')
+ plt.ylabel('Faturamento')
  plt.xticks(rotation=45)
  plt.tight_layout()
  plt.savefig('faturamento_mensal_2023.png')
