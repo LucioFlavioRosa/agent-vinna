@@ -143,9 +143,9 @@ def main(pergunta: str,
                 repo.create_file(file_path, "Create generated file", codigo_final)
 
             time.sleep(2)
-            break
+            
             import teste
-
+            break
             resultado = teste.estimativa()
             break
 
