@@ -1,27 +1,23 @@
 
 import pandas as pd
-from sqlalchemy import create_engine
-from prophet import Prophet
+import sqlalchemy
+import seaborn as sns
+import matplotlib.pyplot as plt
 import os
 
 def estimativa():
-    engine = create_engine(os.getenv('banco_sql_postgresql'))
-    
-    query_orders = """
-    SELECT data_da_compra, SUM(preco_unitario * quantidade_do_produto_vendida) AS total_vendas
+    engine = sqlalchemy.create_engine(os.getenv('banco_sql_postgresql'))
+    query = """
+    SELECT DATE_TRUNC('month', data_da_compra) AS mes, SUM(preco_unitario * quantidade_do_produto_vendida) AS faturamento
     FROM orders
-    WHERE data_da_compra >= NOW() - INTERVAL '1 year 6 months'
-    GROUP BY data_da_compra
-    ORDER BY data_da_compra
+    WHERE EXTRACT(YEAR FROM data_da_compra) = 2023
+    GROUP BY mes
+    ORDER BY mes;
     """
-    
-    df = pd.read_sql(query_orders, engine)
-    df.rename(columns={'data_da_compra': 'ds', 'total_vendas': 'y'}, inplace=True)
-    
-    model = Prophet()
-    model.fit(df)
-    
-    future = model.make_future_dataframe(periods=31)  # Previsão para 31 dias
-    forecast = model.predict(future)
-    
-    return forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']].tail(31)
+    df = pd.read_sql_query(query, engine)
+    fig, ax = plt.subplots()
+    sns.barplot(x='mes', y='faturamento', data=df, ax=ax)
+    ax.set_title('Faturamento Mensal de 2023')
+    ax.set_xlabel('Mês')
+    ax.set_ylabel('Faturamento')
+    return fig
