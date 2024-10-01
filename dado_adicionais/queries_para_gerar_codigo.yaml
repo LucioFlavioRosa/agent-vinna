@@ -22,11 +22,10 @@ query_2:
       5- o gráfico deve ser salvo em um arquivo .png na pasta resultado_python
       6- o resultado final deve ser dado por uma funçao chamada estimativa.
       7- a funcao estimativa nao tem nenhuma variavel de entrada
-      8- o return da função estimativa é o nome da imagem salva
+      8- o return da função estimativa a imagem .png gerada do grafico
       9- NAO deve ter comentario algum, APENAS codigo 
       10- o codigo nao deve ter a funçao print
-      11- o retorno da funçao deve ser somente o nome do arquivo salvo, NAO deve ter o caminho da pasta
-      12- deve usar o read_sql_query para eler as tabelas
+      12- deve usar o read_sql_query para ler as tabelas
       13- NAO PODE TER espaços brancos no inicio do código
 
 query_3:
