@@ -14,12 +14,14 @@ st.image(image_path, use_column_width='always')
 
 pergunta = st.text_input("Qual a sua pergunta?")
 
-#with st.spinner('O agente está buscando a melhor maneira de responder a sua pergunta!...'):
-response = agent_vinna.main(question=pergunta)
+if pergunta:
 
-if type(response) == pd.DataFrame:
-    st.dataframe(response)
-elif hasattr(response, 'plot'):
-    st.pyplot(response)
-else:
-    st.write(response)
+    #with st.spinner('O agente está buscando a melhor maneira de responder a sua pergunta!...'):
+    response = agent_vinna.main(question=pergunta)
+    
+    if type(response) == pd.DataFrame:
+        st.dataframe(response)
+    elif hasattr(response, 'plot'):
+        st.pyplot(response)
+    else:
+        st.write(response)
