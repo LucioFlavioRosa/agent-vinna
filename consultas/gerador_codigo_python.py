@@ -128,7 +128,7 @@ def main(pergunta: str,
           
             g = Github(os.environ.get('chave_git'))
             repo = g.get_repo('LucioFlavioRosa/agent-vinna')
-            file_path = "/mount/src/agent-vinna/teste.py" 
+            file_path = "consultas/teste.py" 
 
             # Attempt to get the existing file (if it might already exist)
             try:
@@ -142,8 +142,8 @@ def main(pergunta: str,
             else:
                 repo.create_file(file_path, "Create generated file", codigo_final)
 
-            from teste import estimativa
-            resultado = estimativa()
+            from consultas import teste
+            resultado = teste.estimativa()
 
             break
           
