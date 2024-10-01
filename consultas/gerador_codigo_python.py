@@ -145,7 +145,6 @@ def main(pergunta: str,
             time.sleep(2)
             
             import teste
-            break
             resultado = teste.estimativa()
             break
 
