@@ -12,8 +12,7 @@ def estimativa():
     orders = pd.read_sql_query(query_orders, engine)
     products = pd.read_sql_query(query_products, engine)
     merged_data = pd.merge(orders, products, on='id_produto')
-    merged_data['faturamento'] = merged_data['preco_unitario'] * merged_data['quantidade_do_produto_vendida']
-    faturamento_por_grupo = merged_data.groupby('grupo_do_produto')['faturamento'].sum().reset_index()
+    faturamento = merged_data.groupby('grupo_do_produto').agg({'preco_unitario': 'sum'}).reset_index()
     fig, ax = plt.subplots()
-    sns.pieplot(data=faturamento_por_grupo, x='faturamento', y='grupo_do_produto', ax=ax)
+    sns.pieplot(data=faturamento, x='preco_unitario', y='grupo_do_produto', ax=ax)
     return fig
