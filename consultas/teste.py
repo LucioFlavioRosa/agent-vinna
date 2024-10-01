@@ -9,8 +9,8 @@ def estimativa():
     engine = create_engine(os.getenv('banco_sql_postgresql'))
     query = """
     SELECT 
-        DATE_TRUNC('month', data_da_compra) AS mes,
-        SUM(preco_unitario * quantidade_do_produto_vendida) AS faturamento
+        EXTRACT(MONTH FROM data_da_compra) AS mes,
+        SUM(preco_unitario * quantidade_do_produto_vendida + valor_frete) AS faturamento
     FROM 
         orders
     WHERE 
@@ -22,5 +22,6 @@ def estimativa():
     """
     df = pd.read_sql_query(query, engine)
     fig, ax = plt.subplots()
-    ax.pie(df['faturamento'], labels=df['mes'].dt.strftime('%B'), autopct='%1.1f%%')
+    ax.pie(df['faturamento'], labels=df['mes'], autopct='%1.1f%%')
+    ax.set_title('Faturamento Mensal de Janeiro a Julho de 2024')
     return fig
