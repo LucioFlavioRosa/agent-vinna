@@ -150,8 +150,6 @@ def main(pergunta: str,
 
         except Exception as e:
             print("An error occurred:", str(e))
-            erro_extra = str(e)
-            os.remove('teste.py')
             continue  # On any error, continue with the loop
 
 
