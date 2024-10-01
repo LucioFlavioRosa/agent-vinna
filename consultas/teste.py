@@ -1,8 +1,8 @@
 
 import pandas as pd
 import sqlalchemy
-import matplotlib.pyplot as plt
 import seaborn as sns
+import matplotlib.pyplot as plt
 import os
 
 def estimativa():
@@ -13,5 +13,5 @@ def estimativa():
     faturamento = merged_data.groupby(['subgrupo_do_produto'])['preco_unitario', 'quantidade_do_produto_vendida'].sum().reset_index()
     faturamento['total'] = faturamento['preco_unitario'] * faturamento['quantidade_do_produto_vendida']
     fig, ax = plt.subplots()
-    ax.pie(faturamento['total'], labels=faturamento['subgrupo_do_produto'], autopct='%1.1f%%')
+    sns.pieplot(data=faturamento, x='total', y='subgrupo_do_produto', ax=ax)
     return fig
