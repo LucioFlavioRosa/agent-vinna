@@ -57,7 +57,6 @@ langsmith==0.1.121
 markdown-it-py==3.0.0
 marshmallow==3.22.0
 matplotlib==3.9.2
-mdurl==0.1.2
 mkl-service==2.4.0
 mmh3==5.0.1
 monotonic==1.6
