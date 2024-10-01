@@ -15,7 +15,7 @@ query_1:
 query_2:
   objetivo: gerar um gráfico para responder a pergunta e seguindo as instruções
   instrucoes:
-      1-NAO DEVE ter texto, NAO DEVE ter comentario, DEVE TER somente codigo python
+      1-NAO DEVE ter texto, NAO DEVE ter comentario, NAO PODE TER espaços brancos no inicio do código, DEVE TER somente codigo python
       1- ler as tabelas fornecidas usando pandas e sqlalchemy.
       2- a conexão com o banco de dados é dado por pela variavel de ambiente banco_sql_postgresql
       3- toda data e string na query sql deve seguir os exemplos, '2024-01-01, 'carro'
@@ -28,7 +28,6 @@ query_2:
       8- NAO deve ter comentario algum, APENAS codigo 
       9- o codigo nao deve ter a funçao print
       10- deve usar o read_sql_query para ler as tabelas
-      11- NAO PODE TER espaços brancos no inicio do código
 
 query_3:
   objetivo: gerar um gráfico de uma predição ou estimativa para responder a pergunta e seguindo as instruções
