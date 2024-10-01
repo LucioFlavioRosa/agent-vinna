@@ -7,10 +7,11 @@ import os
 
 def estimativa():
     engine = create_engine(os.getenv('banco_sql_postgresql'))
-    orders = pd.read_sql_query("SELECT id_produto, quantidade_do_produto_vendida FROM orders WHERE data_da_compra >= '2023-05-01' AND data_da_compra <= '2023-05-31'", engine)
+    orders = pd.read_sql_query("SELECT id_produto, preco_unitario, quantidade_do_produto_vendida FROM orders WHERE data_da_compra >= '2023-05-01' AND data_da_compra <= '2023-05-31'", engine)
     products = pd.read_sql_query("SELECT id_produto, grupo_do_produto FROM products", engine)
     merged_data = pd.merge(orders, products, on='id_produto')
-    faturamento = merged_data.groupby('grupo_do_produto').apply(lambda x: (x['quantidade_do_produto_vendida'] * x['preco_unitario']).sum()).reset_index(name='faturamento')
+    merged_data['faturamento'] = merged_data['preco_unitario'] * merged_data['quantidade_do_produto_vendida']
+    faturamento_por_grupo = merged_data.groupby('grupo_do_produto')['faturamento'].sum().reset_index()
     fig, ax = plt.subplots()
-    sns.pieplot(data=faturamento, x='grupo_do_produto', y='faturamento', ax=ax)
+    sns.pieplot(data=faturamento_por_grupo, x='faturamento', y='grupo_do_produto', ax=ax)
     return fig
