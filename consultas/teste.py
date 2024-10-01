@@ -8,8 +8,7 @@ from sqlalchemy import create_engine
 def estimativa():
  engine = create_engine(os.environ['banco_sql_postgresql'])
  query = """
- SELECT DATE_TRUNC('month', data_da_compra) AS mes, 
- SUM(preco_unitario * quantidade_do_produto_vendida) AS faturamento
+ SELECT DATE_TRUNC('month', data_da_compra) AS mes, SUM(preco_unitario * quantidade_do_produto_vendida) AS faturamento
  FROM orders
  WHERE DATE_PART('year', data_da_compra) = 2023
  GROUP BY mes
