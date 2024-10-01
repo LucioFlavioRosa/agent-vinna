@@ -1,7 +1,7 @@
 
 import pandas as pd
-import matplotlib.pyplot as plt
 import seaborn as sns
+import matplotlib.pyplot as plt
 from sqlalchemy import create_engine
 import os
 
@@ -17,8 +17,7 @@ def estimativa():
         products p ON o.id_produto = p.id_produto
     WHERE 
         p.grupo_do_produto = 'padaria' AND 
-        o.data_da_compra >= '2023-01-01' AND 
-        o.data_da_compra < '2024-01-01'
+        o.data_da_compra BETWEEN '2023-01-01' AND '2023-12-31'
     GROUP BY 
         mes
     ORDER BY 
