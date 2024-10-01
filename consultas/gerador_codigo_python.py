@@ -2,6 +2,7 @@ import os
 import json
 import time
 import datetime
+import inspect
 
 from openai import OpenAI
 from github import Github
@@ -142,14 +143,16 @@ def main(pergunta: str,
             else:
                 repo.create_file(file_path, "Create generated file", codigo_final)
 
+            from consultas import teste
+            functions = [obj for name, obj in inspect.getmembers(teste) if inspect.isfunction(obj)]
+
+            if 'estimativa' in functions:
+              break
+            resultado = teste.estimativa()
             break
           
         except Exception as e:
             print("An error occurred:", str(e))
             continue  
-          
-    from consultas import teste
-    print(dir(teste)) 
-    break
       
     return resultado
