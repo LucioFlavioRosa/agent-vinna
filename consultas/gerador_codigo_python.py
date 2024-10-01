@@ -142,14 +142,14 @@ def main(pergunta: str,
             else:
                 repo.create_file(file_path, "Create generated file", codigo_final)
 
-            from consultas import teste
-            resultado = teste.estimativa()
-
             break
           
         except Exception as e:
             print("An error occurred:", str(e))
             continue  
-            
-  
+          
+    from consultas import teste
+    print(dir(teste)) 
+    break
+      
     return resultado
