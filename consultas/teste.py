@@ -14,10 +14,11 @@ def estimativa():
  GROUP BY mes
  ORDER BY mes;
  """
- df = pd.read_sql_query(query, engine)
+ dados = pd.read_sql_query(query, engine)
  fig, ax = plt.subplots()
- sns.barplot(x='mes', y='faturamento', data=df, ax=ax)
+ sns.barplot(x='mes', y='faturamento', data=dados, ax=ax)
  ax.set_title('Faturamento Mensal de 2023')
- ax.set_xlabel('Mes')
+ ax.set_xlabel('Mês')
  ax.set_ylabel('Faturamento')
+ plt.xticks(rotation=45)
  return fig
