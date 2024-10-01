@@ -13,4 +13,4 @@ def leitura(arquivo: str) -> dict:
             dados: dict = yaml.safe_load(file)
         return dados
     else:
-        raise FileNotFoundError(f"No such file or directory: {arquivo}")
+        raise FileNotFoundError(f"No such file or directory: {arquivo_completo}")
