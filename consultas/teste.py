@@ -1,12 +1,12 @@
 
 import pandas as pd
-import sqlalchemy
 import seaborn as sns
 import matplotlib.pyplot as plt
+from sqlalchemy import create_engine
 import os
 
 def estimativa():
-    engine = sqlalchemy.create_engine(os.getenv('banco_sql_postgresql'))
+    engine = create_engine(os.getenv('banco_sql_postgresql'))
     query = """
     SELECT DATE_TRUNC('month', data_da_compra) AS mes, SUM(preco_unitario * quantidade_do_produto_vendida) AS faturamento
     FROM orders
