@@ -166,11 +166,10 @@ def main(pergunta: str,
              #   repo.update_file(file_path, "Update generated file", codigo_final, file.sha)
             #else:
              #   repo.create_file(file_path, "Create generated file", codigo_final)
-            #exec(codigo_final)
+            exec(codigo_final)
             #from consultas import teste
-            execution_results = execute_python_code(codigo_final)
-            resultado = execution_results['result'] 
-            #resultado = teste.estimativa()
+           
+            resultado = estimativa()
             break
           
         except Exception as e:
